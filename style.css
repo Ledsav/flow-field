@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, html {
+    overflow: hidden;  /* This removes the scrollbars */
+}
+
+canvas {
+    background: #000;
+}
