@@ -60,26 +60,30 @@ class Particle {
         this.palette = palettePOYWithAlpha;
         this.color = this.palette[Object.keys(this.palette)[Math.floor(Math.random() * Object.keys(this.palette).length)]];
 
+        //Particel external settings
+        this.isParticelOn = effect.isParticelOn
+
     }
 
     draw(context) {
         if (this.x >= 0 && this.x <= this.effect.width - this.effect.widthThreshold &&
             this.y >= 0 && this.y <= this.effect.height - this.effect.heightThreshold) {
 
-            // draw circle filled with color at current position
-            /*            context.beginPath();
-                        context.arc(this.x, this.y, 8, 0, Math.PI * 2);
-                        context.fillStyle = this.color;
-                        context.fill();*/
-
-            context.beginPath();
-            context.moveTo(this.history[0].x, this.history[0].y);
-            this.history.forEach(point => {
-                context.lineTo(point.x, point.y);
-            });
-
-            context.strokeStyle = this.color;
-            context.stroke();
+            if (this.isParticelOn) {
+                // draw circle filled with color at current position
+                context.beginPath();
+                context.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                context.fillStyle = this.color;
+                context.fill();
+            } else {
+                context.beginPath();
+                context.moveTo(this.history[0].x, this.history[0].y);
+                this.history.forEach(point => {
+                    context.lineTo(point.x, point.y);
+                });
+                context.strokeStyle = this.color;
+                context.stroke();
+            }
         }
     }
 
@@ -142,7 +146,7 @@ class Effect {
 
         // Particles
         this.particles = [];
-        this.numberOfParticles = 1000;
+        this.numberOfParticles = 2000;
 
         // Flow Field and Grid
         this.noiseSeed = Math.random() * 1000;
@@ -167,6 +171,7 @@ class Effect {
         this.isGridOn = false;
         this.isArrowOn = true;
         this.isDynamic = false;
+        this.isParticelOn = false
 
         // Controls and UI
         this.showControls = false;
@@ -176,6 +181,9 @@ class Effect {
             {key: 'A', action: 'Toggle Arrows'},
             {key: 'N', action: 'Show Noise'},
             {key: 'D', action: 'Toggle Dynamic Noise'},
+            {key: "P", action: 'Toggle Particels'},
+            {key: "+", action: "More Particels"},
+            {key: "-", action: "Less Particels"},
             {key: "↑", action: "Zoom In"},
             {key: "↓", action: "Zoom Out"},
             {key: "←", action: "Slow Down (if dynamic)"},
@@ -197,10 +205,18 @@ class Effect {
             }
             if (event.key === "n") {
                 this.isNoiseGridOn = !this.isNoiseGridOn;
-                console.log(this.isNoiseGridOn);
             }
             if (event.key === "d") {
                 this.isDynamic = !this.isDynamic;
+            }
+            if (event.key === "p") {
+                this.toggleParticel();
+            }
+            if (event.key === "-") {
+                this.updateParticel(-1);
+            }
+            if (event.key === "+") {
+                this.updateParticel(1);
             }
             if (event.key === "ArrowUp") {
                 this.updateZoom(0.01);
@@ -434,9 +450,22 @@ class Effect {
         this.showControls = !this.showControls;
     }
 
+    toggleParticel() {
+        this.isParticelOn = !this.isParticelOn;
+        this.initParticles();
+    }
+
     changeNoiseType(type) {
         this.noiseType = type;
         this.initNoise();
+    }
+
+    updateParticel(delta) {
+        this.numberOfParticles += delta * 100;
+        if (this.numberOfParticles < 0) this.numberOfParticles = 0; // Set a minimum limit
+        if (this.numberOfParticles > 2500) this.numberOfParticles = 2500;     // Set a maximum limit
+        console.log(this.numberOfParticles)
+        this.initParticles();
     }
 
     updateZoom(delta) {
