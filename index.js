@@ -177,6 +177,7 @@ class Effect {
         this.showControls = false;
         this.controls = [
             {key: 'C', action: 'Show Controls'},
+            {key: "S", action: "Save Screenshot"},
             {key: 'G', action: 'Toggle Grid'},
             {key: 'A', action: 'Toggle Arrows'},
             {key: 'N', action: 'Show Noise'},
@@ -190,7 +191,6 @@ class Effect {
             {key: "→", action: "Speed Up (if dynamic)"},
             {key: "1", action: "perlin noise"},
             {key: "2", action: "periodic noise"},
-            {key: "S", action: "Save Screenshot"}
 
         ];
 
