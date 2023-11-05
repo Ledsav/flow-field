@@ -189,7 +189,8 @@ class Effect {
             {key: "←", action: "Slow Down (if dynamic)"},
             {key: "→", action: "Speed Up (if dynamic)"},
             {key: "1", action: "perlin noise"},
-            {key: "2", action: "periodic noise"}
+            {key: "2", action: "periodic noise"},
+            {key: "S", action: "Save Screenshot"}
 
         ];
 
@@ -240,6 +241,9 @@ class Effect {
                 this.toggleControls();
             } else if (this.showControls) {
                 this.toggleControls();
+            }
+            if (event.key === "s") {
+                this.saveScreenshot();
             }
 
         });
@@ -490,7 +494,27 @@ class Effect {
         if (this.dynamicSpeed > 1) this.dynamicSpeed = 3;     // Set a maximum limit
     }
 
-    render(context) {
+    saveScreenshot() {
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = this.width;
+        tempCanvas.height = this.height;
+
+        // Redraw your scene (without controls) on the temporary canvas.
+        this.renderScene(tempCtx);
+
+        // Save the temporary canvas content.
+        const dataURL = tempCanvas.toDataURL('image/png');
+        const downloadLink = document.createElement('a');
+        downloadLink.href = dataURL;
+        downloadLink.download = 'screenshot.png';
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+
+
+    renderScene(context) {
         if (this.isGridOn) {
             this.drawGrid(context);
         }
@@ -508,8 +532,6 @@ class Effect {
             particle.update();
         });
 
-        this.drawControls(context);
-
         let now = Date.now();
         if (now - this.lastUpdate >= this.dynamicSpeed * 1000) {
             this.lastUpdate = now;
@@ -517,6 +539,12 @@ class Effect {
                 this.updateNoise();
             }
         }
+    }
+
+    render(context) {
+        this.renderScene(context);
+        this.drawControls(context);
+
     }
 
 }
