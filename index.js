@@ -19,31 +19,34 @@ const rgbaWithAlpha = (hex, alpha = 1) => {
     return `rgba(${r},${g},${b},${alpha})`;
 };
 
+const alpha = 0.1;
+
 const paletteBGYWithAlpha = {
-    deepBlue: rgbaWithAlpha('#0D3B66', 0.3),
-    midBlue: rgbaWithAlpha('#4A6D8C', 0.3),
-    lightBlue: rgbaWithAlpha('#89A0B0', 0.3),
-    teal: rgbaWithAlpha('#46B7A6', 0.3),
-    lightGreen: rgbaWithAlpha('#88D5A1', 0.3),
-    midGreen: rgbaWithAlpha('#4AB67A', 0.3),
-    deepGreen: rgbaWithAlpha('#0D8544', 0.3),
-    limeGreen: rgbaWithAlpha('#AEDD63', 0.3),
-    lightYellow: rgbaWithAlpha('#F3E79B', 0.3),
-    yellow: rgbaWithAlpha('#FAF0CA', 0.3)
+    deepBlue: rgbaWithAlpha('#0D3B66', alpha),
+    midBlue: rgbaWithAlpha('#4A6D8C', alpha),
+    lightBlue: rgbaWithAlpha('#89A0B0', alpha),
+    teal: rgbaWithAlpha('#46B7A6', alpha),
+    lightGreen: rgbaWithAlpha('#88D5A1', alpha),
+    midGreen: rgbaWithAlpha('#4AB67A', alpha),
+    deepGreen: rgbaWithAlpha('#0D8544', alpha),
+    limeGreen: rgbaWithAlpha('#AEDD63', alpha),
+    lightYellow: rgbaWithAlpha('#F3E79B', alpha),
+    yellow: rgbaWithAlpha('#FAF0CA', alpha)
 };
 
 const palettePOYWithAlpha = {
-    deepPurple: rgbaWithAlpha('#4B0082', 0.3), // Indigo
-    midPurple: rgbaWithAlpha('#800080', 0.3),  // Purple
-    lightPurple: rgbaWithAlpha('#DA70D6', 0.3),// Orchid
-    deepOrange: rgbaWithAlpha('#FF8C00', 0.3), // DarkOrange
-    midOrange: rgbaWithAlpha('#FFA500', 0.3),  // Orange
-    lightOrange: rgbaWithAlpha('#FFD700', 0.3),// Gold
-    darkYellow: rgbaWithAlpha('#FFD300', 0.3), // P3 Yellow
-    midYellow: rgbaWithAlpha('#FFFA00', 0.3),  // Electric Yellow
-    lightYellow: rgbaWithAlpha('#FFFFE0', 0.3),// LightYellow
-    paleYellow: rgbaWithAlpha('#FFFACD', 0.3)  // LemonChiffon
+    deepPurple: rgbaWithAlpha('#4B0082', alpha), // Indigo
+    midPurple: rgbaWithAlpha('#800080', alpha),  // Purple
+    lightPurple: rgbaWithAlpha('#DA70D6', alpha),// Orchid
+    deepOrange: rgbaWithAlpha('#FF8C00', alpha), // DarkOrange
+    midOrange: rgbaWithAlpha('#FFA500', alpha),  // Orange
+    lightOrange: rgbaWithAlpha('#FFD700', alpha),// Gold
+    darkYellow: rgbaWithAlpha('#FFD300', alpha), // P3 Yellow
+    midYellow: rgbaWithAlpha('#FFFA00', alpha),  // Electric Yellow
+    lightYellow: rgbaWithAlpha('#FFFFE0', alpha),// LightYellow
+    paleYellow: rgbaWithAlpha('#FFFACD', alpha)  // LemonChiffon
 };
+
 
 // Particle Class
 class Particle {
@@ -54,7 +57,7 @@ class Particle {
         this.velocity = {x: 0, y: 0};
         this.speedModifier = 3 //Math.random() * 5 + 1;
         this.history = [{x: this.x, y: this.y}];
-        this.maxLength = 300 //Math.floor(Math.random() * 200 + 10);
+        this.maxLength = 1000 //Math.floor(Math.random() * 200 + 10);
         this.angle = 0;
         this.timer = this.maxLength * 2;
         this.palette = palettePOYWithAlpha;
