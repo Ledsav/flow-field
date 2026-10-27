@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "setup: check Python",
+      "detail": "Nothing to install; Python is only used for the local static server",
+      "type": "shell",
+      "command": "python3 --version",
+      "windows": {"command": "python --version"},
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup (fresh clone)",
+      "detail": "No dependencies; checks that Python is available for the Dev server",
+      "dependsOrder": "sequence",
+      "dependsOn": ["setup: check Python"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev",
+      "detail": "Static server on http://localhost:8000/ (index.js is an ES module, so file:// does not work)",
+      "type": "shell",
+      "command": "python3 -m http.server 8000",
+      "windows": {"command": "python -m http.server 8000"},
+      "isBackground": true,
+      "problemMatcher": []
+    }
+  ]
+}
